@@ -1,13 +1,10 @@
 # ![Build your own X](feynman.png)
-
 First of all I am interested in C/C++, Python, Nim and Java
 Gonna code my simple own examples guided by tutorials provided
 <!-- 
 ## Table of contents
 
 - [!Build your own X](#build-your-own-x)
-  - [Tutorials](#tutorials)
-      - [Build your own `3D Renderer`](#build-your-own-3d-renderer)
       - [Build your own `BitTorrent Client`](#build-your-own-bittorrent-client)
       - [Build your own `Blockchain / Cryptocurrency`](#build-your-own-blockchain--cryptocurrency)
       - [Build your own `Command-Line Tool`](#build-your-own-command-line-tool)
@@ -68,6 +65,7 @@ Gonna code my simple own examples guided by tutorials provided
 * [**Java**: _Creating Your First Blockchain with Java_](https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa)
 * [**JavaScript**: _A cryptocurrency implementation in less than 1500 lines of code_](https://github.com/conradoqg/naivecoin)
 * [**JavaScript**: _Build your own Blockchain in JavaScript_](https://github.com/nambrot/blockchain-in-js)
+* 
 * [**JavaScript**: _Learn & Build a JavaScript Blockchain_](https://medium.com/digital-alchemy-holdings/learn-build-a-javascript-blockchain-part-1-ca61c285821e)
 * [**JavaScript**: _Creating a blockchain with JavaScript_](https://github.com/SavjeeTutorials/SavjeeCoin) [video]
 * [**JavaScript**: _How To Launch Your Own Production-Ready Cryptocurrency_](https://hackernoon.com/how-to-launch-your-own-production-ready-cryptocurrency-ab97cb773371)
