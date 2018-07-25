@@ -3,6 +3,8 @@ from time import time
 from uuid import uuid4
 import hashlib
 import json
+# For web API:
+form flask import Flask
 
 
 class Blockchain(object):
@@ -31,7 +33,6 @@ class Blockchain(object):
         return block
 
     def new_transaction(self, sender, recipient, amount):
-
         """
         Creates a new transaction to go into the next mined Block
         :param sender: <str> Address of the Sender
@@ -99,3 +100,33 @@ block = {
     'proof': 324984774000,
     'previous_hash': "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
 }
+
+
+app = Flask(__name__)
+
+#Generate unique identifier for the first node:
+node_identifier = str(uuid4()).replace('-', '')
+
+#Init Blockchain:
+blockchain = Blockchain()
+
+@app.route('/mine', methods=['GET'])
+def mine():
+    return "We will mine a new Block"
+
+@app.route('/transactions/new', methods=['POST'])
+def new_transaction():
+    return "We will add a new transaction"
+
+@app.route('/chain', methods=['GET'])
+def full_chain():
+    response = {
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain)
+    }
+    return jsonify(response), 200
+
+
+if __name__ = '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
