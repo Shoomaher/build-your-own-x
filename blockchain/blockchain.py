@@ -4,7 +4,7 @@ from uuid import uuid4
 import hashlib
 import json
 # For web API:
-form flask import Flask
+from flask import Flask
 
 
 class Blockchain(object):
@@ -58,14 +58,14 @@ class Blockchain(object):
         return hashlib.sha256(block_string).hexdigest()
 
     def proof_of_work(self, last_proof):
-         """
+        """
         Simple Proof of Work Algorithm:
          - Find a number p' such that hash(pp') contains leading 4 zeroes, where p is the previous p'
          - p is the previous proof, and p' is the new proof
         :param last_proof: <int>
         :return: <int>
         """
-
+        
         proof = 0
         while self.valid_proof(last_proof, proof) is False:
             proof+=1
@@ -73,8 +73,8 @@ class Blockchain(object):
         return proof
 
     @staticmethod
-    def valid_proof:
-         """
+    def valid_proof():
+        """
         Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?
         :param last_proof: <int> Previous Proof
         :param proof: <int> Current Proof
@@ -127,6 +127,6 @@ def full_chain():
     return jsonify(response), 200
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 
