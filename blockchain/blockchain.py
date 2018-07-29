@@ -9,10 +9,12 @@ from flask import Flask, jsonify, request
 
 class Blockchain(object):
     def __init__(self):
-        self.chain = []
         self.current_transactions = []
+        self.chain = []
+        # Create the genesis block
+        self.new_block(previous_hash='1', proof=100)
 
-    def new_block(self):
+    def new_block(self, proof, previous_hash):
         """
         Create a new Block in the Blockchain
         :param proof: <int> The proof given by the Proof of Work algorithm
@@ -57,7 +59,7 @@ class Blockchain(object):
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
-    def proof_of_work(self, last_proof):
+    def proof_of_work(self, last_block):
         """
         Simple Proof of Work Algorithm:
          - Find a number p' such that hash(pp') contains leading 4 zeroes,
@@ -66,15 +68,17 @@ class Blockchain(object):
         :param last_proof: <int>
         :return: <int>
         """
-        
+        last_proof = last_block['proof']       
+        last_hash = self.hash(last_block)
+
         proof = 0
-        while self.valid_proof(last_proof, proof) is False:
+        while self.valid_proof(last_proof, proof, last_hash) is False:
             proof+=1
 
         return proof
 
     @staticmethod
-    def valid_proof():
+    def valid_proof(last_proof, proof, last_hash):
         """
         Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?
         :param last_proof: <int> Previous Proof
@@ -82,7 +86,7 @@ class Blockchain(object):
         :return: <bool> True if correct, False if not.
         """
 
-        guess = "{}{}".format(last_proof, proof)
+        guess = "{}{}{}".format(last_proof, proof, last_hash).encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
 
@@ -115,14 +119,13 @@ blockchain = Blockchain()
 def mine():
     #We run the proof of work algorithm to get the next proof...
     last_block = blockchain.last_block
-    last_proof = last_block['proof']
-    proof = blockchain.proof_of_work(last_proof)
+    proof = blockchain.proof_of_work(last_block)
 
     #We must receive a reward for finding the proof.
     #The sender is "0" to signify that this node has mined a new coin.
     blockchain.new_transaction(
         sender = "0",
-        recipient = node_recipient,
+        recipient = node_identifier,
         amount = 1,
     )
 
@@ -130,7 +133,7 @@ def mine():
     previous_hash = blockchain.hash(last_block)
     block = blockchain.new_block(proof, previous_hash)
 
-    resonse = {
+    response = {
         'message': 'New block forged',
         'index': block['index'],
         'transactions': block['transactions'],
