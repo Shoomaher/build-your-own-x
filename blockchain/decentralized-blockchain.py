@@ -6,7 +6,7 @@ from time import time
 from uuid import uuid4
 # For web API:
 from flask import Flask, jsonify, request
-from urllib.parse import parse
+from urllib.parse import urlparse
 
 
 
@@ -19,14 +19,14 @@ class Blockchain(object):
 
         self.nodes = set()
 
-    def register_node(self, adress):
+    def register_node(self, address):
         """
         Add a new node to the list of nodes
         :param address: <str> Address of node. Eg. 'http://192.168.0.5:5000'
         :return: None
         """
 
-        parsed_url = urlparse(adress)
+        parsed_url = urlparse(address)
         self.nodes.add(parsed_url.netloc)
 
     def valid_node(self, chain):
@@ -164,23 +164,6 @@ class Blockchain(object):
         guess = "{}{}{}".format(last_proof, proof, last_hash).encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
-
-
-    
-# block = {
-#     'index': 1,
-#     'timestamp': time(),
-#     'transactions': [
-#         { 
-#             'sender': "8527147fe1f5426f9dd545de4b27ee00",
-#             'recipient': "a77f5cdfa2934df3954a5c7c7da5df1f",
-#             'amount': 5,
-#         }
-#     ],
-#     'proof': 324984774000,
-#     'previous_hash': "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
-# }
-
 
 app = Flask(__name__)
 
